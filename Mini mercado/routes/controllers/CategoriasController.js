@@ -5,7 +5,7 @@ const ProdutosModel = require('../models/ProdutosModel');
 const { validarId } = require('../validators/IDValidator');
 const { validarProduto, validarProdutoAtualizacao } = require('../validators/ProdutoValidator');
 
-router.get('/cargos', async (req, res) => {
+router.get('/produtos', async (req, res) => {
   const cargos = await CargoModel.find();
   res.json(cargos);
 });

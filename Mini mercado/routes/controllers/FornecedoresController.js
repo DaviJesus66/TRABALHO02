@@ -18,7 +18,7 @@ router.get('/cargos/:id', validarId, async (req, res) => {
   res.json(cargo);
 });
 
-router.post('/cargos', validarCargo, async (req, res) => {
+router.post('/produtos', validarCargo, async (req, res) => {
   const novoCargo = await CargoModel.create(req.body);
   res.status(201).json(novoCargo);
 });
