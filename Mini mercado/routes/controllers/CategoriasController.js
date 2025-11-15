@@ -1,40 +1,40 @@
 const express = require('express');
 const router = express.Router();
 
-const ProdutosModel = require('../models/ProdutosModel');
+const CategoriasModel = require('../models/CategoriasModel');
 const { validarId } = require('../validators/IDValidator');
-const { validarProduto, validarProdutoAtualizacao } = require('../validators/ProdutoValidator');
+const { validarCategoria, validarCategoriaAtualizacao } = require('../validators/CategoriaValidator');
 
-router.get('/produtos', async (req, res) => {
-  const cargos = await CargoModel.find();
-  res.json(cargos);
+router.get('/Categorias', async (req, res) => {
+  const Categorias = await CategoriaModel.find();
+  res.json(Categorias);
 });
 
-router.get('/cargos/:id', validarId, async (req, res) => {
-  const cargo = await CargoModel.findById(req.params.id);
-  if (!cargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.get('/Categorias/:id', validarId, async (req, res) => {
+  const Categoria = await CategoriaModel.findById(req.params.id);
+  if (!Categoria) {
+    return res.status(404).json({ message: 'Categoria não encontrada!' });
   }
-  res.json(cargo);
+  res.json(Categoria);
 });
 
-router.post('/cargos', validarCargo, async (req, res) => {
-  const novoCargo = await CargoModel.create(req.body);
-  res.status(201).json(novoCargo);
+router.post('/Categorias', validarCategoria, async (req, res) => {
+  const novaCategoria = await CategoriaModel.create(req.body);
+  res.status(201).json(novaCategoria);
 });
 
-router.put('/cargos/:id', validarId, validarCargoAtualizacao, async (req, res) => {
-  const updatedCargo = await CargoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!updatedCargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.put('/Categorias/:id', validarId, validarCategoriaAtualizacao, async (req, res) => {
+  const updatedCategoria = await CategoriaModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!updatedCategoria) {
+    return res.status(404).json({ message: 'Categoria não encontrado!' });
   }
-  res.json(updatedCargo);
+  res.json(updatedCategoria);
 });
 
-router.delete('/cargos/:id', validarId, async (req, res) => {
-  const deletedCargo = await CargoModel.findByIdAndDelete(req.params.id);
-  if (!deletedCargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.delete('/Categorias/:id', validarId, async (req, res) => {
+  const deletedCategoria = await CategoriaModel.findByIdAndDelete(req.params.id);
+  if (!deletedCategoria) {
+    return res.status(404).json({ message: 'Categoria não encontrado!' });
   }
   res.status(204).send();
 });
