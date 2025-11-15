@@ -9,4 +9,4 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 )
 
-module.exports = mongoose.model('Produto', schema);
+module.exports = mongoose.model('Fornecedor', schema);

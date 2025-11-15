@@ -5,36 +5,36 @@ const ProdutosModel = require('../models/ProdutosModel');
 const { validarId } = require('../validators/IDValidator');
 const { validarProduto, validarProdutoAtualizacao } = require('../validators/ProdutoValidator');
 
-router.get('/cargos', async (req, res) => {
-  const cargos = await CargoModel.find();
-  res.json(cargos);
+router.get('/produtos', async (req, res) => {
+  const produtos = await ProdutoModel.find();
+  res.json(produtos);
 });
 
-router.get('/cargos/:id', validarId, async (req, res) => {
-  const cargo = await CargoModel.findById(req.params.id);
-  if (!cargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.get('/produtos/:id', validarId, async (req, res) => {
+  const produto = await ProdutoModel.findById(req.params.id);
+  if (!produto) {
+    return res.status(404).json({ message: 'Produto não encontrado!' });
   }
-  res.json(cargo);
+  res.json(produto);
 });
 
-router.post('/cargos', validarCargo, async (req, res) => {
-  const novoCargo = await CargoModel.create(req.body);
-  res.status(201).json(novoCargo);
+router.post('/produtos', validarProduto, async (req, res) => {
+  const novoProduto = await ProdutoModel.create(req.body);
+  res.status(201).json(novoProduto);
 });
 
-router.put('/cargos/:id', validarId, validarCargoAtualizacao, async (req, res) => {
-  const updatedCargo = await CargoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!updatedCargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.put('/produto/:id', validarId, validarProdutoAtualizacao, async (req, res) => {
+  const updatedProduto = await ProdutoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!updatedProduto) {
+    return res.status(404).json({ message: 'Produto não encontrado!' });
   }
-  res.json(updatedCargo);
+  res.json(updatedProduto);
 });
 
-router.delete('/cargos/:id', validarId, async (req, res) => {
-  const deletedCargo = await CargoModel.findByIdAndDelete(req.params.id);
-  if (!deletedCargo) {
-    return res.status(404).json({ message: 'Cargo não encontrado!' });
+router.delete('/produtos/:id', validarId, async (req, res) => {
+  const deletedProduto = await ProdutoModel.findByIdAndDelete(req.params.id);
+  if (!deletedProduto) {
+    return res.status(404).json({ message: 'Produto não encontrado!' });
   }
   res.status(204).send();
 });
