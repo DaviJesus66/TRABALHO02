@@ -4,7 +4,7 @@ const schema = new mongoose.Schema(
   {
     nome: { type: String, required: true },
     descricao: { type: String, required: true },
-    valor: { type: Number, required: true },
+    cnpj: { type: Number, required: true },
   },
   { timestamps: true }
 )
