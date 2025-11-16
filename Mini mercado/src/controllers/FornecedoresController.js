@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const FornecedoresModel = require('../models/FornecedoresModel');
+const FornecedoresModel = require('../models/FornecedoresModels');
 const { validarId } = require('../validators/IDValidator');
-const { validarFornecedor, validarFornecedorAtualizacao } = require('../validators/FornecedorValidator');
+const { validarFornecedor, validarFornecedorAtualizacao } = require('../validators/FornecedoresValidators');
 
 router.get('/Fornecedores', async (req, res) => {
   const Fornecedores = await FornecedorModel.find();

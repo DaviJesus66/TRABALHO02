@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const CategoriasModel = require('../models/CategoriasModel');
+const CategoriasModel = require('../models/CategoriasModels');
 const { validarId } = require('../validators/IDValidator');
-const { validarCategoria, validarCategoriaAtualizacao } = require('../validators/CategoriaValidator');
+const { validarCategoria, validarCategoriaAtualizacao } = require('../validators/CategoriasValidators');
 
 router.get('/Categorias', async (req, res) => {
   const Categorias = await CategoriaModel.find();
