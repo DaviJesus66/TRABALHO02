@@ -1,9 +1,18 @@
 const yup = require('yup');
 
 const pagamentoSchema = yup.object().shape({
-  pedido: yup.string().required('ID do pedido obrigatório'),
-  valor: yup.number().required('Valor obrigatório').min(0),
-  forma_pagamento: yup.string().required('Forma de pagamento obrigatória')
+  pedido: yup
+    .string()
+    .required('ID do pedido é obrigatório')
+    .trim(),
+  valor: yup
+    .number()
+    .required('Valor é obrigatório')
+    .min(0, 'Valor não pode ser negativo'),
+  formaPagamento: yup
+    .string()
+    .required('Forma de pagamento é obrigatória')
+    .trim(),
 });
 
 async function validarPagamento(req, res, next) {
@@ -15,15 +24,15 @@ async function validarPagamento(req, res, next) {
   }
 }
 
-const pagamentoAtualizaSchema = yup.object().shape({
-  pedido: yup.string(),
-  valor: yup.number().min(0),
-  forma_pagamento: yup.string()
+const pagamentoAtualizarSchema = yup.object().shape({
+  pedido: yup.string().trim(),
+  valor: yup.number().min(0, 'Valor não pode ser negativo'),
+  formaPagamento: yup.string().trim(),
 });
 
 async function validarPagamentoAtualizacao(req, res, next) {
   try {
-    await pagamentoAtualizaSchema.validate(req.body, { abortEarly: false });
+    await pagamentoAtualizarSchema.validate(req.body, { abortEarly: false });
     next();
   } catch (err) {
     return res.status(400).json({ erros: err.errors });
@@ -31,3 +40,4 @@ async function validarPagamentoAtualizacao(req, res, next) {
 }
 
 module.exports = { validarPagamento, validarPagamentoAtualizacao };
+

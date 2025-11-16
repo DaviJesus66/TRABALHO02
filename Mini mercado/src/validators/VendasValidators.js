@@ -1,9 +1,17 @@
 const yup = require('yup');
 
 const vendaSchema = yup.object().shape({
-  pedido: yup.string().required('ID do pedido obrigatório'),
-  funcionario: yup.string().required('ID do funcionário obrigatório'),
-  data: yup.date()
+  pedido: yup
+    .string()
+    .required('ID do pedido é obrigatório')
+    .trim(),
+  funcionario: yup
+    .string()
+    .required('ID do funcionário é obrigatório')
+    .trim(),
+  data: yup
+    .date()
+    .typeError('A data deve ser válida'),
 });
 
 async function validarVenda(req, res, next) {
@@ -15,15 +23,15 @@ async function validarVenda(req, res, next) {
   }
 }
 
-const vendaAtualizaSchema = yup.object().shape({
-  pedido: yup.string(),
-  funcionario: yup.string(),
-  data: yup.date()
+const vendaAtualizarSchema = yup.object().shape({
+  pedido: yup.string().trim(),
+  funcionario: yup.string().trim(),
+  data: yup.date().typeError('A data deve ser válida'),
 });
 
 async function validarVendaAtualizacao(req, res, next) {
   try {
-    await vendaAtualizaSchema.validate(req.body, { abortEarly: false });
+    await vendaAtualizarSchema.validate(req.body, { abortEarly: false });
     next();
   } catch (err) {
     return res.status(400).json({ erros: err.errors });

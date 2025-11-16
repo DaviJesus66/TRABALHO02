@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
-  pedido: { type: mongoose.Schema.Types.ObjectId, ref: 'Pedido', required: true },
-  funcionario: { type: mongoose.Schema.Types.ObjectId, ref: 'Funcionario', required: true },
-  data: { type: Date, default: Date.now }
-}, { timestamps: true });
+const VendaSchema = new mongoose.Schema(
+  {
+    pedido: { type: mongoose.Schema.Types.ObjectId, ref: 'Pedido', required: true },
+    funcionario: { type: mongoose.Schema.Types.ObjectId, ref: 'Funcionario', required: true }
+    // O campo data pode ser omitido pois o timestamps já adiciona createdAt e updatedAt automaticamente
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Venda', schema);
+module.exports = mongoose.model('Venda', VendaSchema);

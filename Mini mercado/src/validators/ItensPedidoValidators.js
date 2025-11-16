@@ -1,10 +1,22 @@
 const yup = require('yup');
 
 const itensPedidoSchema = yup.object().shape({
-  pedido: yup.string().required('ID do pedido obrigatório'),
-  produto: yup.string().required('ID do produto obrigatório'),
-  quantidade: yup.number().required('Quantidade obrigatória').min(1),
-  preco_unitario: yup.number().required('Preço unitário obrigatório').min(0)
+  pedido: yup
+    .string()
+    .required('ID do pedido é obrigatório')
+    .trim(),
+  produto: yup
+    .string()
+    .required('ID do produto é obrigatório')
+    .trim(),
+  quantidade: yup
+    .number()
+    .required('Quantidade é obrigatória')
+    .min(1, 'Quantidade mínima: 1'),
+  precoUnitario: yup
+    .number()
+    .required('Preço unitário é obrigatório')
+    .min(0, 'Preço unitário não pode ser negativo'),
 });
 
 async function validarItensPedido(req, res, next) {
@@ -16,16 +28,16 @@ async function validarItensPedido(req, res, next) {
   }
 }
 
-const itensPedidoAtualizaSchema = yup.object().shape({
-  pedido: yup.string(),
-  produto: yup.string(),
-  quantidade: yup.number().min(1),
-  preco_unitario: yup.number().min(0)
+const itensPedidoAtualizarSchema = yup.object().shape({
+  pedido: yup.string().trim(),
+  produto: yup.string().trim(),
+  quantidade: yup.number().min(1, 'Quantidade mínima: 1'),
+  precoUnitario: yup.number().min(0, 'Preço unitário não pode ser negativo'),
 });
 
 async function validarItensPedidoAtualizacao(req, res, next) {
   try {
-    await itensPedidoAtualizaSchema.validate(req.body, { abortEarly: false });
+    await itensPedidoAtualizarSchema.validate(req.body, { abortEarly: false });
     next();
   } catch (err) {
     return res.status(400).json({ erros: err.errors });
@@ -33,3 +45,4 @@ async function validarItensPedidoAtualizacao(req, res, next) {
 }
 
 module.exports = { validarItensPedido, validarItensPedidoAtualizacao };
+

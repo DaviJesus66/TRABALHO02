@@ -6,37 +6,61 @@ const { validarId } = require('../validators/IDValidator');
 const { validarCategoria, validarCategoriaAtualizacao } = require('../validators/CategoriasValidators');
 
 router.get('/Categorias', async (req, res) => {
-  const Categorias = await CategoriaModel.find();
-  res.json(Categorias);
+  try {
+    const categorias = await CategoriasModel.find();
+    res.json(categorias);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar categorias.', error });
+  }
 });
 
 router.get('/Categorias/:id', validarId, async (req, res) => {
-  const Categoria = await CategoriaModel.findById(req.params.id);
-  if (!Categoria) {
-    return res.status(404).json({ message: 'Categoria não encontrada!' });
+  try {
+    const categoria = await CategoriasModel.findById(req.params.id);
+    if (!categoria) {
+      return res.status(404).json({ message: 'Categoria não encontrada!' });
+    }
+    res.json(categoria);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar categoria.', error });
   }
-  res.json(Categoria);
 });
 
 router.post('/Categorias', validarCategoria, async (req, res) => {
-  const novaCategoria = await CategoriaModel.create(req.body);
-  res.status(201).json(novaCategoria);
+  try {
+    const novaCategoria = await CategoriasModel.create(req.body);
+    res.status(201).json(novaCategoria);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao criar categoria.', error });
+  }
 });
 
 router.put('/Categorias/:id', validarId, validarCategoriaAtualizacao, async (req, res) => {
-  const updatedCategoria = await CategoriaModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!updatedCategoria) {
-    return res.status(404).json({ message: 'Categoria não encontrado!' });
+  try {
+    const updatedCategoria = await CategoriasModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedCategoria) {
+      return res.status(404).json({ message: 'Categoria não encontrada!' });
+    }
+    res.json(updatedCategoria);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar categoria.', error });
   }
-  res.json(updatedCategoria);
 });
 
 router.delete('/Categorias/:id', validarId, async (req, res) => {
-  const deletedCategoria = await CategoriaModel.findByIdAndDelete(req.params.id);
-  if (!deletedCategoria) {
-    return res.status(404).json({ message: 'Categoria não encontrado!' });
+  try {
+    const deletedCategoria = await CategoriasModel.findByIdAndDelete(req.params.id);
+    if (!deletedCategoria) {
+      return res.status(404).json({ message: 'Categoria não encontrada!' });
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar categoria.', error });
   }
-  res.status(204).send();
 });
 
 module.exports = router;

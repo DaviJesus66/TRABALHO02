@@ -1,37 +1,66 @@
-const Cliente = require('../models/Cliente');
+const express = require('express');
+const router = express.Router();
 
+const ClientesModel = require('../models/ClientesModels');
+const { validarId } = require('../validators/IDValidator');
+const { validarClientes, validarClientesAtualizacao } = require('../validators/ClientesValidators');
 
-module.exports = {
-async index(req, res) {
-const data = await Cliente.find();
-return res.json(data);
-},
+router.get('/clientes', async (req, res) => {
+  try {
+    const clientes = await ClientesModel.find();
+    res.json(clientes);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar clientes.', error });
+  }
+});
 
+router.get('/clientes/:id', validarId, async (req, res) => {
+  try {
+    const clientes = await ClientesModel.findById(req.params.id);
+    if (!clientes) {
+      return res.status(404).json({ message: 'Clientes não encontrada!' });
+    }
+    res.json(clientes);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar clientes.', error });
+  }
+});
 
-async show(req, res) {
-const item = await Cliente.findById(req.params.id);
-if (!item) return res.status(404).json({ error: 'Cliente não encontrado' });
-return res.json(item);
-},
+router.post('/clientes', validarClientes, async (req, res) => {
+  try {
+    const novaClientes = await ClientesModel.create(req.body);
+    res.status(201).json(novaClientes);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao criar clientes.', error });
+  }
+});
 
+router.put('/clientes/:id', validarId, validarClientesAtualizacao, async (req, res) => {
+  try {
+    const updatedClientes = await ClientesModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedClientes) {
+      return res.status(404).json({ message: 'Clientes não encontrada!' });
+    }
+    res.json(updatedClientes);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar clientes.', error });
+  }
+});
 
-async store(req, res) {
-const exists = await Cliente.findOne({ email: req.body.email });
-if (exists) return res.status(400).json({ error: 'Email já existe' });
-const created = await Cliente.create(req.body);
-return res.status(201).json(created);
-},
+router.delete('/clientes/:id', validarId, async (req, res) => {
+  try {
+    const deletedClientes = await ClientesModel.findByIdAndDelete(req.params.id);
+    if (!deletedClientes) {
+      return res.status(404).json({ message: 'Clientes não encontrads!' });
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar clientes.', error });
+  }
+});
 
-
-async update(req, res) {
-const updated = await Cliente.findByIdAndUpdate(req.params.id, req.body, { new: true });
-if (!updated) return res.status(404).json({ error: 'Cliente não encontrado' });
-return res.json(updated);
-},
-
-
-async destroy(req, res) {
-await Cliente.findByIdAndDelete(req.params.id);
-return res.status(204).send();
-},
-};
+module.exports = router;

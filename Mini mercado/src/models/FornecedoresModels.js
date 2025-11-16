@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema(
+const FornecedorSchema = new mongoose.Schema(
   {
     nome: { type: String, required: true },
     descricao: { type: String, required: true },
-    cnpj: { type: Number, required: true },
+    cnpj: { type: String, required: true }, // Alterado para string por boas práticas
   },
   { timestamps: true }
-)
+);
 
-module.exports = mongoose.model('Fornecedor', schema);
+module.exports = mongoose.model('Fornecedor', FornecedorSchema);

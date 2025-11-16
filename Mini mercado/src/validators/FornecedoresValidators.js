@@ -1,10 +1,19 @@
 const yup = require('yup');
 
 const fornecedorSchema = yup.object().shape({
-  nome: yup.string().required('O nome do fornecedor é obrigatório').min(3, 'O nome do fornecedor deve ter pelo menos 3 caracteres'),
-  descricao: yup.string().required('A descrição do fornecedor é obrigatória').min(10, 'A descrição do fornecedor deve ter pelo menos 10 caracteres'),
-  cnpj: yup.number().required('O valor do fornecedor é obrigatório').min(1518.00, 'O valor deve ser no mínimo R$ 1.000,00'),
-})
+  nome: yup
+    .string()
+    .required('O nome do fornecedor é obrigatório')
+    .min(3, 'O nome do fornecedor deve ter pelo menos 3 caracteres'),
+  descricao: yup
+    .string()
+    .required('A descrição do fornecedor é obrigatória')
+    .min(10, 'A descrição do fornecedor deve ter pelo menos 10 caracteres'),
+  cnpj: yup
+    .string()
+    .required('O CNPJ do fornecedor é obrigatório')
+    .length(14, 'O CNPJ deve ter exatamente 14 dígitos'),
+});
 
 async function validarFornecedor(req, res, next) {
   try {
@@ -18,8 +27,8 @@ async function validarFornecedor(req, res, next) {
 const fornecedorAtualizarSchema = yup.object().shape({
   nome: yup.string().min(3, 'O nome do fornecedor deve ter pelo menos 3 caracteres'),
   descricao: yup.string().min(10, 'A descrição do fornecedor deve ter pelo menos 10 caracteres'),
-  salario: yup.number().min(1518.00, 'O valor deve ser no mínimo R$ 1.000,00'),
-})
+  cnpj: yup.string().length(14, 'O CNPJ deve ter exatamente 14 dígitos'),
+});
 
 async function validarFornecedorAtualizacao(req, res, next) {
   try {

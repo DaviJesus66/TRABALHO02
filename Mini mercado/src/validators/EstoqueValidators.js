@@ -1,8 +1,14 @@
 const yup = require('yup');
 
 const estoqueSchema = yup.object().shape({
-  produto: yup.string().required('ID do produto obrigatório'),
-  quantidade: yup.number().required('Quantidade obrigatória').min(0)
+  produto: yup
+    .string()
+    .required('ID do produto é obrigatório')
+    .trim(),
+  quantidade: yup
+    .number()
+    .required('Quantidade é obrigatória')
+    .min(0, 'Quantidade não pode ser negativa'),
 });
 
 async function validarEstoque(req, res, next) {
@@ -14,14 +20,16 @@ async function validarEstoque(req, res, next) {
   }
 }
 
-const estoqueAtualizaSchema = yup.object().shape({
-  produto: yup.string(),
-  quantidade: yup.number().min(0)
+const estoqueAtualizarSchema = yup.object().shape({
+  produto: yup.string().trim(),
+  quantidade: yup
+    .number()
+    .min(0, 'Quantidade não pode ser negativa'),
 });
 
 async function validarEstoqueAtualizacao(req, res, next) {
   try {
-    await estoqueAtualizaSchema.validate(req.body, { abortEarly: false });
+    await estoqueAtualizarSchema.validate(req.body, { abortEarly: false });
     next();
   } catch (err) {
     return res.status(400).json({ erros: err.errors });
@@ -29,3 +37,4 @@ async function validarEstoqueAtualizacao(req, res, next) {
 }
 
 module.exports = { validarEstoque, validarEstoqueAtualizacao };
+
