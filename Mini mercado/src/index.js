@@ -24,34 +24,34 @@ mongoose.connect(url)
 
 // Rotas
 const ProdutosController = require('./controllers/ProdutosController');
-app.use('/produtos', ProdutosController);
+app.use(ProdutosController);
 
 const CategoriasController = require('./controllers/CategoriasController');
-app.use('/categorias', CategoriasController);
+app.use(CategoriasController);
 
 const FornecedoresController = require('./controllers/FornecedoresController');
-app.use('/fornecedores', FornecedoresController);
+app.use(FornecedoresController);
 
 const ClientesController = require('./controllers/ClientesController');
-app.use('/clientes', ClientesController);
+app.use(ClientesController);
 
 const FuncionariosController = require('./controllers/FuncionariosController');
-app.use('/funcionarios', FuncionariosController);
+app.use(FuncionariosController);
 
 const PedidosController = require('./controllers/PedidosController');
-app.use('/pedidos', PedidosController);
+app.use(PedidosController);
 
 const ItensPedidosController = require('./controllers/ItensPedidoController');
-app.use('/itens-pedidos', ItensPedidosController);
+app.use(ItensPedidosController);
 
 const VendasController = require('./controllers/VendasController');
-app.use('/vendas', VendasController);
+app.use(VendasController);
 
 const PagamentosController = require('./controllers/PagamentosController');
-app.use('/pagamentos', PagamentosController);
+app.use(PagamentosController);
 
 const EstoqueController = require('./controllers/EstoqueController');
-app.use('/estoque', EstoqueController);
+app.use(EstoqueController);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
