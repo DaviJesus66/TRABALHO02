@@ -41,7 +41,7 @@ app.use('/funcionarios', FuncionariosController);
 const PedidosController = require('./controllers/PedidosController');
 app.use('/pedidos', PedidosController);
 
-const ItensPedidosController = require('./controllers/ItensPedidosController');
+const ItensPedidosController = require('./controllers/ItensPedidoController');
 app.use('/itens-pedidos', ItensPedidosController);
 
 const VendasController = require('./controllers/VendasController');

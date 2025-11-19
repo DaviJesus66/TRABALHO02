@@ -32,4 +32,13 @@ const pedidoSchema = yup.object().shape({
     .required('O valor total é obrigatório'),
 });
 
-module.exports = validateYup(pedidoSchema);
+// criação
+const validarPedidos = validateYup(pedidoSchema);
+
+// atualização
+const validarPedidosAtualizacao = validateYup(pedidoSchema, { isUpdate: true });
+
+module.exports = {
+  validarPedidos,
+  validarPedidosAtualizacao,
+};

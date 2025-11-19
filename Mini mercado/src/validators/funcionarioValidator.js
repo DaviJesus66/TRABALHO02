@@ -21,4 +21,14 @@ const funcionarioSchema = yup.object().shape({
     .required('O salário do funcionário é obrigatório'),
 });
 
-module.exports = validateYup(funcionarioSchema);
+// criação
+const validarFuncionarios = validateYup(funcionarioSchema);
+
+// atualização
+const validarFuncionariosAtualizacao = validateYup(funcionarioSchema, { isUpdate: true });
+
+module.exports = {
+  validarFuncionarios,
+  validarFuncionariosAtualizacao,
+};
+

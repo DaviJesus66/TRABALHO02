@@ -21,4 +21,14 @@ const clienteSchema = yup.object().shape({
     .trim(),
 });
 
-module.exports = validateYup(clienteSchema);
+// validação para criação (tudo obrigatório conforme schema)
+const validarClientes = validateYup(clienteSchema);
+
+// validação para atualização (campos opcionais, mas se vierem, seguem o schema)
+const validarClientesAtualizacao = validateYup(clienteSchema, { isUpdate: true });
+
+module.exports = {
+  validarClientes,
+  validarClientesAtualizacao,
+};
+

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const FuncionariosModel = require('../models/FuncionariosModels');
 const { validarId } = require('../validators/IDValidator');
-const { validarFuncionarios, validarFuncionariosAtualizacao } = require('../validators/FuncionariosValidators');
+const { validarFuncionarios, validarFuncionariosAtualizacao } = require('../validators/funcionarioValidator');
 
 router.get('/funcionarios', async (req, res) => {
   try {
