@@ -308,4 +308,4 @@ Controle das issues
 Atribuição de tarefas
 
 Validação dos relacionamentos
-
+![Diagrana do Sistema](./docs/diagrama.png/)
