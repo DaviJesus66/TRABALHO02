@@ -1,206 +1,212 @@
-API Empresas — Documentação Oficial
+# Mini Mercado API
 
-Esta documentação descreve toda a estrutura, funcionamento e padrões utilizados na API Empresas (Node.js + Express + MongoDB + Mongoose + Yup) desenvolvida ao longo do projeto.
+API RESTful desenvolvida em Node.js, Express e MongoDB que gerencia todas as operações de um mini mercado, incluindo produtos, categorias, fornecedores, clientes, funcionários, pedidos, vendas, pagamentos e estoque.
 
-📌 Visão Geral do Projeto
+---
 
-A API Empresas é uma aplicação REST completa que implementa operações CRUD, relacionamentos entre collections e validações de dados utilizando Yup. O projeto segue uma arquitetura organizada em Models, Controllers e Routes, além de utilizar conexão com banco MongoDB Atlas.
-
-Objetivos principais:
-
-Implementação de CRUD completo
-
-Relacionamentos entre entidades
-
-Validação de dados com Yup
-
-Documentação técnica no Postman
-
-Versionamento com Git
-
-Estrutura limpa e escalável
-
-📁 Estrutura do Projeto
-src/
-│  index.js
-│
-├─ controllers/
-│   ├─ EmpresaController.js
-│   ├─ DepartamentoController.js
-│   ├─ TarefaController.js
-│   └─ FuncionarioController.js
-│
-├─ models/
-│   ├─ EmpresaModel.js
-│   ├─ DepartamentoModel.js
-│   ├─ TarefaModel.js
-│   └─ FuncionarioModel.js
-│
-├─ routes/
-│   ├─ empresaRoutes.js
-│   ├─ departamentoRoutes.js
-│   ├─ tarefaRoutes.js
-│   └─ funcionarioRoutes.js
-│
-└─ database/
-    └─ connection.js
-⚙️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 Node.js
-
 Express.js
-
 MongoDB Atlas
-
 Mongoose
-
-Yup para validação
-
+Yup
 dotenv
+Nodemon 
+documentação e testes
 
-Nodemon (desenvolvimento)
+## Sobre o Sistema
 
-🌐 Configuração do Servidor
+A API tem como objetivo centralizar e automatizar o gerenciamento de um mini mercado, permitindo o controle completo de produtos, clientes, vendas, pagamentos e operações internas.
 
-Exemplo resumido do arquivo index.js:
-
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv').config();
-
-
-const app = express();
-app.use(express.json());
-
-
-// Conexão com banco
-mongoose.connect(process.env.DB_HOST)
-  .then(() => console.log('MongoDB conectado!'))
-  .catch(err => console.log('Erro ao conectar:', err));
-
-
-// Rotas
-const empresaRoutes = require('./routes/empresaRoutes');
-app.use('/empresas', empresaRoutes);
-
-
-app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
-🧩 Endpoints (Resumo Geral)
-
-A documentação detalhada será feita no Postman, mas aqui está um resumo geral:
-
-🔹 Empresas
-
-GET /empresas – Listar todas
-
-POST /empresas – Criar nova
-
-GET /empresas/:id – Buscar por ID
-
-PUT /empresas/:id – Atualizar
-
-DELETE /empresas/:id – Remover
-
-🔹 Departamentos
-
-GET /departamentos
-
-POST /departamentos
-
-GET /departamentos/:id
-
-PUT /departamentos/:id
-
-DELETE /departamentos/:id
-
-Relacionado com Empresa
-
-🔹 Funcionários
-
-GET /funcionarios
-
-POST /funcionarios
-
-GET /funcionarios/:id
-
-PUT /funcionarios/:id
-
-DELETE /funcionarios/:id
-
-Relacionado com Departamento
-
-🔹 Tarefas
-
-GET /tarefas
-
-POST /tarefas
-
-GET /tarefas/:id
-
-PUT /tarefas/:id
-
-DELETE /tarefas/:id
-
-Relacionado com Funcionário
-
-✔️ Validações com Yup
-
-Todas as entidades possuem validações obrigatórias, por exemplo:
-
-const schema = Yup.object().shape({
-  nome: Yup.string().required(),
-  email: Yup.string().email(),
-  ativo: Yup.boolean().default(true)
-});
-
-As validações são aplicadas nos Controllers antes da gravação no banco.
-
-🔗 Relacionamentos
-
-Os principais relacionamentos são:
-
-Empresa → Departamentos
-
-Departamento → Funcionários
-
-Funcionário → Tarefas
-
-Exemplo de relacionamento no Model:
-
-empresa: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Empresa'
+### Funcionalidades Principais (O sistema permite:)
+Cadastro, consulta, edição e exclusão de:
+Produtos
+Categorias
+Clientes
+Funcionários
+Fornecedores
+Pedidos e itens
+Vendas
+Pagamentos
+Controle de estoque
+Cada módulo possui CRUD completo, validações com Yup e integração com o MongoDB via Mongoose.
+## Finalidade da API
+A API funciona como um back-end completo para uso em aplicações web, desktop ou mobile, possibilitando:
+Registro e gerenciamento de produtos, categorias e fornecedores  
+Controle de clientes e funcionários  
+Registro de vendas e pedidos  
+Atualização automática de estoque  
+Registro de pagamentos  
+## Problema Resolvido
+O sistema substitui planilhas e controles manuais, fornecendo:
+Centralização dos dados  
+Redução de erros humanos  
+Validações consistentes  
+Organização de estoque e vendas  
+Base robusta para futura expansão (PDV, dashboards, relatórios etc.)
+## Funcionalidades Implementadas
+# CRUD completo de:
+  - Empresas  
+  - Departamentos  
+  - Funcionários  
+  - Tarefas  
+- Relacionamentos:
+  - Empresa → Departamentos
+  - Departamento → Funcionários
+  - Funcionário → Tarefas
+- Validação de dados com Yup  
+- Estrutura padronizada em **Models / Controllers / Routes**
+- Conexão com MongoDB Atlas via Mongoose
+- Documentação no Postman
+- Versionamento com Git/GitHub
+#### Resposta:
+```json
+[
+  {
+    "id": "674b9ea27a",
+    "nome": "Arroz",
+    "preco": 12.50,
+    "categoria": "674b9cc98",
+    "quantidade": 20
+  }
+]
+POST /produtos
+json
+Copiar código
+{
+  "nome": "Feijão",
+  "preco": 8.90,
+  "categoria": "674b9cc98",
+  "quantidade": 50
 }
-📘 Documentação no Postman
+Resposta:
+json
+Copiar código
+{
+  "message": "Produto criado com sucesso!"
+}
+PUT /produtos/:id
+Atualiza um produto.
 
-A documentação inclui:
+DELETE /produtos/:id
+Remove um produto.
 
-Descrição de cada rota
+# Collections e Relacionamentos
+produtos
+nome (String)
+preco (Number)
+categoria (ObjectId → categorias)
+quantidade (Number)
+fornecedor (ObjectId → fornecedores)
+Um produto pertence a uma categoria e a um fornecedor.
+categorias
+nome (String)
+Uma categoria possui vários produtos.
+clientes
+nome
+cpf
+telefone
+Um cliente possui vários pedidos e vendas.
+funcionarios
+nome
+cargo
+cpf
+Funcionário pode registrar vendas.
+fornecedores
+nome
+cnpj
+telefone
+Fornece vários produtos.
+pedidos
+cliente (ObjectId)
+data
+total
+Um pedido contém vários itens.
+itensPedido
+produto (ObjectId)
+quantidade
+precoUnitario
+pedido (ObjectId)
+vendas
+cliente
+funcionario
+data
+total
+pagamentos
+venda (ObjectId)
+valor
+tipo
+data
+# Diagrama de Modelagem: 
+![Diagrama do Banco](./Mini%20mercado/docs/diagrama.png)
 
-Corpo esperado das requisições
-
-Exemplos de resposta
-
-Códigos de erro
-
-Coleção exportada
-
-▶️ Como Rodar o Projeto
-git clone <repositorio>
-cd api-empresas
+Instalação, Configuração e Execução
+Requisitos
+Node.js
+MongoDB Atlas
+NPM ou Yarn
+Clonar o projeto
+bash
+Copiar código
+git clone <url-do-repositorio>
+cd mini-mercado-api
+Instalar Dependências
+bash
+Copiar código
 npm install
+Arquivo .env
+Crie na raiz:
+ini
+Copiar código
+DB_HOST=cluster0.hgjgzrq.mongodb.net
+DB_USER=Davvisj
+DB_PASS=43sJJnGw3Ub7UqPs
+DB_NAME=Mini-mercado
+⚠ Nunca subir credenciais reais no GitHub.
+▶ Inicializar o projeto
+Produção:
+bash
+Copiar código
 npm start
-
-Necessário criar arquivo .env:
-
-DB_HOST=
-DB_USER=
-DB_PASS=
-DB_NAME=
-🤝 Contribuição
-
-a) Criar branch b) Commitar alterações c) Realizar Pull Request
-
-📄 Licença
-
-Projeto acadêmico — uso livre para estudo.
+Desenvolvimento:
+bash
+Copiar código
+npm run dev
+Arquivo principal
+bash
+Copiar código
+src/index.js
+Configura o Express
+Conecta ao MongoDB Atlas
+Carrega rotas
+Inicia a API
+Comunicação com o Banco de Dados
+A API usa MongoDB Atlas, conectando-se através do Mongoose com as credenciais definidas no arquivo .env.
+Integrantes
+Nome Completo	Matrícula	GitHub
+Gabriel Araújo da Silva	24214290041	@gabrielaraujo8671-jpg
+Davi Souza De Jesus	24214290011	@DaviJeus66
+Alyson Fábio Dos Santos Viana	24214290012	@Alysonviana
+Contribuição de Cada Membro
+Davi — Backend & Banco de Dados
+Criou a estrutura base do projeto
+Configurou o MongoDB Atlas
+Criou o .env.example
+Models iniciais (Produto, Categoria, Cliente)
+Implementou 3 CRUDs completos
+Conectou Mongoose ao Atlas
+Criou a primeira branch e subiu o projeto
+Gabriel — Validações & Documentação
+Implementou validações com Yup e Mongoose
+Desenvolveu 3 CRUDs adicionais (Clientes, Funcionários, Pedidos)
+Criou a collection completa no Postman
+Criou todo o README.md
+Ajustou documentação das rotas
+Organizou exemplos de requests e responses
+Alyson — Gerente & Modelagem
+Criou o diagrama completo do banco com 10 entidades
+Desenvolveu 4 CRUDs (Vendas, ItensVenda, Estoque, Pagamentos)
+Criou e gerenciou issues no GitHub
+Atribuiu tarefas e acompanhou commits
+Validou relacionamentos das collections
