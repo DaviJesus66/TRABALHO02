@@ -309,3 +309,4 @@ Atribuição de tarefas
 
 Validação dos relacionamentos
 ![Diagrana do Sistema](./docs/diagrama.png/)
+![Diagrana do Sistema](./docs/1000500674.jpg/)
