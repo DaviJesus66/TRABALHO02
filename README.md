@@ -204,3 +204,5 @@ a) Criar branch b) Commitar alterações c) Realizar Pull Request
 📄 Licença
 
 Projeto acadêmico — uso livre para estudo.
+
+[def]: imagem.jpg
